@@ -15,6 +15,7 @@
 		"onCommand:extension.bannerCommentSetFont"
 	],
 	"main": "./out/extension",
+	"icon" : "images/banner-comment-icon.png",
 	"galleryBanner": {
         "color": "#333333",
         "theme": "dark"
