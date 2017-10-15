@@ -1,0 +1,64 @@
+{
+	"name": "banner-comments",
+	"displayName": "Banner comments",
+	"description": "Generate a banner comment at the selected line.",
+	"version": "0.0.1",
+	"publisher": "heyimfuzz",
+	"engines": {
+		"vscode": "^1.17.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.bannerCommentApply",
+		"onCommand:extension.bannerCommentSetFont"
+	],
+	"main": "./out/extension",
+	"galleryBanner": {
+        "color": "#C80000",
+        "theme": "dark"
+    },
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.bannerCommentApply",
+				"title": "Banner comments: Apply"
+			},
+			{
+				"command": "extension.bannerCommentSetFont",
+				"title": "Banner comments: Set font"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Banner comments",
+			"properties": {
+				"banner-comments.font": {
+					"type": "string",
+					"default": "Banner4",
+					"description": "Default banner font to use when converting.",
+					"scope": "resource"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^2.5.3",
+		"vscode": "^1.1.5",
+		"@types/node": "^7.0.43",
+		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"async": "^2.5.0",
+		"figlet": "^1.2.0",
+		"lodash": "^4.17.4"
+	}
+}
