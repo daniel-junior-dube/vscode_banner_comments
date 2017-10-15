@@ -2,7 +2,7 @@
 	"name": "banner-comments",
 	"displayName": "Banner comments",
 	"description": "Generate a banner comment at the selected line.",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"publisher": "heyimfuzz",
 	"engines": {
 		"vscode": "^1.17.0"
@@ -16,7 +16,7 @@
 	],
 	"main": "./out/extension",
 	"galleryBanner": {
-        "color": "#C80000",
+        "color": "#333333",
         "theme": "dark"
     },
 	"contributes": {

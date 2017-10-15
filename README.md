@@ -1,20 +1,42 @@
-# banner-comments README
+```
+██████╗  █████╗ ███╗   ██╗███╗   ██╗███████╗██████╗ 
+██╔══██╗██╔══██╗████╗  ██║████╗  ██║██╔════╝██╔══██╗
+██████╔╝███████║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
+██╔══██╗██╔══██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
+██████╔╝██║  ██║██║ ╚████║██║ ╚████║███████╗██║  ██║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
+                                                    
 
-This is the README for your extension "banner-comments". After writing up a brief description, we recommend including the following sections.
+
+ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗
+██╔════╝██╔═══██╗████╗ ████║████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
+██║     ██║   ██║██╔████╔██║██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████╗
+██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
+```                                                                                              
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Converts a select line into a banner using figlet. Some file format will also automatically wrap the banner in a block comment (See at the end of the file for a list of supported file format).
 
-For example if there is an image subfolder under your extension project workspace:
+###Commands:
 
-\!\[feature X\]\(images/feature-x.png\)
+- __"Apply"__: Converts selected line into a banner comment.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+![feature 'Apply'](images/banner-comments-apply.gif)
+
+- __"Set font"__: Sets the figlet font to use.
+
+![feature 'Apply'](images/banner-comments-set-font.gif)
+
+NOTE: Also supports multi-line selections:
+
+![feature 'Apply'](images/banner-comments-multi-line.gif)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+None!
 
 ## Extension Settings
 
@@ -24,42 +46,25 @@ For example:
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `banner-comments.font`: "\<figlet font name\>" (Figlet font to use when converting a line.)
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Only a couple of languages are supported for block comment. Those that are not supported will have to be commented manually.
+
+Here's a list of the supported languages:
+- css
+- less
+- sass
+- javascript
+- typescript
+- json
+- html
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release of the 'Banner comments' extension.
 
 -----------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**

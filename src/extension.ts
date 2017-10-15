@@ -30,6 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
             case "less":
             case "sass":
             case "javascript":
+            case "typescript":
             case "json":
                 blockCommentTags = [ "/*", "*/" ];
                 break;
