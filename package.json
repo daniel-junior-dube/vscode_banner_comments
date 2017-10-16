@@ -1,8 +1,8 @@
 {
 	"name": "banner-comments",
 	"displayName": "Banner comments",
-	"description": "Generate a banner comment at the selected line.",
-	"version": "0.0.3",
+	"description": "Converts selected lines into banner comments using figlet.",
+	"version": "0.0.4",
 	"publisher": "heyimfuzz",
 	"repository" : {
 		"type" : "git",
@@ -62,8 +62,6 @@
 		"@types/mocha": "^2.2.42"
 	},
 	"dependencies": {
-		"async": "^2.5.0",
-		"figlet": "^1.2.0",
-		"lodash": "^4.17.4"
+		"figlet": "^1.2.0"
 	}
 }

@@ -18,11 +18,11 @@
 
 ## Features
 
-Converts a select line into a banner using figlet. Some file format will also automatically wrap the banner in a block comment (See at the end of the file for a list of supported file format).
+Converts selected lines into banners using figlet. Some file formats will also automatically wrap the banner in a block comment (See at the end of the README for a list of supported file formats).
 
 ###Commands:
 
-- __"Apply"__: Converts selected line into a banner comment.
+- __"Apply"__: Converts the selected lines into banner comments.
 
 ![feature 'Apply'](images/banner-comments-apply.gif)
 
@@ -39,10 +39,6 @@ NOTE: Also supports multi-line selections:
 None!
 
 ## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
 
 This extension contributes the following settings:
 
