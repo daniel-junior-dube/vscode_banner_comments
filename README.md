@@ -53,6 +53,7 @@ This extension contributes the following settings:
 ### 0.1.0
 
 - Now detects and uses the file's comment tags to wrap the banner text! (Uses the blockComment to wrap the text or puts lineComments in front of each line)
+- Auto-trims whitespaces from the end of each line of the banner.
 
 ### 0.0.1
 
