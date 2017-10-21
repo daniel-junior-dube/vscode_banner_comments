@@ -78,28 +78,35 @@ export function activate(context: vscode.ExtensionContext) {
 		editor.edit(builder => {
 			for (const selection of selections) {
 				var err = null;
-				var text:string = null;
 				var figletText:string = null;
-				var bannerText:string = null;
+				var bannerText:string = "";
+				var useBlockComment:boolean = false;
 				try {
-					text = editor.document.getText(selection);
-					figletText = figlet.textSync(text, figletConfig);
+					figletText = figlet.textSync(
+						editor.document.getText(selection),
+						figletConfig
+					);
+					// Setting the formatting steps
+					let formatAndAddLine = _line => {
+						bannerText += _line.replace(/\s*$/,"")+"\n";
+					};
 					if (!!commentTags) {
 						if (commentTags.blockComment) {
-							bannerText = commentTags.blockComment[0] + "\n";
-							bannerText += figletText + "\n";
-							bannerText += commentTags.blockComment[1];
+							useBlockComment = true;
 						} else if (commentTags.lineComment) {
-							bannerText = "";
-							figletText.split("\n").forEach(_line => {
-								bannerText += commentTags.lineComment+_line+"\n";
-							});
-						} else {
-							bannerText = figletText;
+							formatAndAddLine = _line => {
+								bannerText += (
+									commentTags.lineComment +
+									_line.replace(/\s*$/,"") +
+									"\n"
+								);
+							};
 						}
-					} else {
-						bannerText = figletText;
 					}
+					// Assemble the banner comment
+					if (useBlockComment) bannerText += commentTags.blockComment[0] + "\n";
+					figletText.split("\n").forEach(formatAndAddLine);
+					if (useBlockComment) bannerText += commentTags.blockComment[1] + "\n";
 				} catch (replaceErr) {
 					err = replaceErr;
 				} finally {
@@ -131,7 +138,7 @@ export function activate(context: vscode.ExtensionContext) {
 			config.update('font', selectedPickerItem.label, true);
 
 			// Debug purposes
-			console.log("Updated Banner-comments font setting to '%s'", selectedPickerItem.label);
+			console.log("Banner-comments: Updated font setting to '%s'", selectedPickerItem.label);
 		});
 	});
 
