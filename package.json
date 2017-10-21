@@ -2,16 +2,17 @@
 	"name": "banner-comments",
 	"displayName": "Banner comments",
 	"description": "Converts selected lines into banner comments using figlet.",
-	"version": "0.0.5",
+	"version": "0.1.0",
 	"publisher": "heyimfuzz",
-	"repository" : {
-		"type" : "git",
-		"url" : "https://github.com/IMFUZZ/vscode_banner_comments.git"
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/IMFUZZ/vscode_banner_comments.git"
 	},
 	"engines": {
 		"vscode": "^1.17.0"
 	},
 	"categories": [
+		"Formatters",
 		"Other"
 	],
 	"activationEvents": [
@@ -19,11 +20,11 @@
 		"onCommand:extension.bannerCommentSetFont"
 	],
 	"main": "./out/extension",
-	"icon" : "images/banner-comment-icon.png",
+	"icon": "images/banner-comment-icon.png",
 	"galleryBanner": {
-        "color": "#333333",
-        "theme": "dark"
-    },
+		"color": "#333333",
+		"theme": "dark"
+	},
 	"contributes": {
 		"commands": [
 			{
@@ -62,6 +63,7 @@
 		"@types/mocha": "^2.2.42"
 	},
 	"dependencies": {
+		"comment-json": "^1.1.3",
 		"figlet": "^1.2.0"
 	}
 }

@@ -1,11 +1,11 @@
 ```
-██████╗  █████╗ ███╗   ██╗███╗   ██╗███████╗██████╗ 
+██████╗  █████╗ ███╗   ██╗███╗   ██╗███████╗██████╗
 ██╔══██╗██╔══██╗████╗  ██║████╗  ██║██╔════╝██╔══██╗
 ██████╔╝███████║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
 ██╔══██╗██╔══██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
 ██████╔╝██║  ██║██║ ╚████║██║ ╚████║███████╗██║  ██║
 ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
-                                                    
+
 
 
  ██████╗ ██████╗ ███╗   ███╗███╗   ███╗███████╗███╗   ██╗████████╗███████╗
@@ -14,11 +14,11 @@
 ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ╚════██║
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ███████║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
-```                                                                                              
+```
 
 ## Features
 
-Converts selected lines into banners using figlet. Some file formats will also automatically wrap the banner in a block comment (See at the end of the README for a list of supported file formats).
+Converts selected lines into banners-comments using figlet.
 
 ###Commands:
 
@@ -46,18 +46,13 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-Only a couple of languages are supported for block comment. Those that are not supported will have to be commented manually.
-
-Here's a list of the supported languages:
-- css
-- less
-- sass
-- javascript
-- typescript
-- json
-- html
+- Only the languages provided by vscode are supported to wrap the banner with comments.
 
 ## Release Notes
+
+### 0.1.0
+
+- Now detects and uses the file's comment tags to wrap the banner text! (Uses the blockComment to wrap the text or puts lineComments in front of each line)
 
 ### 0.0.1
 
