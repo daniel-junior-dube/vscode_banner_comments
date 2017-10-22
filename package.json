@@ -17,7 +17,11 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.bannerCommentApply",
-		"onCommand:extension.bannerCommentSetFont"
+		"onCommand:extension.bannerCommentSetFont",
+		"onCommand:extension.bannerCommentPickFromFavorites",
+		"onCommand:extension.bannerCommentAddAFontToFavorites",
+		"onCommand:extension.bannerCommentAddCurrentFontToFavorites",
+		"onCommand:extension.bannerCommentRemoveFromFavorites"
 	],
 	"main": "./out/extension",
 	"icon": "images/banner-comment-icon.png",
@@ -29,11 +33,27 @@
 		"commands": [
 			{
 				"command": "extension.bannerCommentApply",
-				"title": "Banner comments: Apply"
+				"title": "Banner comments: Apply."
 			},
 			{
 				"command": "extension.bannerCommentSetFont",
-				"title": "Banner comments: Set font"
+				"title": "Banner comments: Select a font."
+			},
+			{
+				"command": "extension.bannerCommentPickFromFavorites",
+				"title": "Banner comments: Select from favorites."
+			},
+			{
+				"command": "extension.bannerCommentAddAFontToFavorites",
+				"title": "Banner comments: Add a font to favorites."
+			},
+			{
+				"command": "extension.bannerCommentAddCurrentFontToFavorites",
+				"title": "Banner comments: Add current font to favorites."
+			},
+			{
+				"command": "extension.bannerCommentRemoveFromFavorites",
+				"title": "Banner comments: Remove a font from favorites."
 			}
 		],
 		"configuration": {
@@ -43,7 +63,19 @@
 				"banner-comments.font": {
 					"type": "string",
 					"default": "Banner4",
-					"description": "Default banner font to use when converting.",
+					"description": "Default banner font to use.",
+					"scope": "resource"
+				},
+				"banner-comments.favorites": {
+					"type": "string[]",
+					"default": [],
+					"description": "List of favorites figlet fonts.",
+					"scope": "resource"
+				},
+				"banner-comments.trimTrailingWhitespaces": {
+					"type": "boolean",
+					"default": true,
+					"description": "Automatically trims the trailing whitespaces of the generated banner.",
 					"scope": "resource"
 				}
 			}
@@ -63,6 +95,7 @@
 		"@types/mocha": "^2.2.42"
 	},
 	"dependencies": {
+		"async": "^2.5.0",
 		"comment-json": "^1.1.3",
 		"figlet": "^1.2.0"
 	}
