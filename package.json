@@ -1,101 +1,101 @@
 {
-	"name": "banner-comments",
-	"displayName": "Banner comments",
-	"description": "Converts selected lines into banner comments using figlet.",
-	"version": "0.2.0",
-	"publisher": "heyimfuzz",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/IMFUZZ/vscode_banner_comments.git"
-	},
-	"engines": {
-		"vscode": "^1.17.0"
-	},
-	"categories": [
-		"Formatters",
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.bannerCommentApplyH1",
-		"onCommand:extension.bannerCommentApplyH2",
-		"onCommand:extension.bannerCommentApplyH3",
-		"onCommand:extension.bannerCommentSetH1Font",
-		"onCommand:extension.bannerCommentSetH2Font",
-		"onCommand:extension.bannerCommentSetH3Font"
-	],
-	"main": "./out/extension",
-	"icon": "images/banner-comment-icon.png",
-	"galleryBanner": {
-		"color": "#333333",
-		"theme": "dark"
-	},
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.bannerCommentApplyH1",
-				"title": "Banner comments: Apply h1 font"
-			},
-			{
-				"command": "extension.bannerCommentApplyH2",
-				"title": "Banner comments: Apply h2 font"
-			},
-			{
-				"command": "extension.bannerCommentApplyH3",
-				"title": "Banner comments: Apply h3 font"
-			},
-			{
-				"command": "extension.bannerCommentSetH1Font",
-				"title": "Banner comments: Set h1 font"
-			},
-			{
-				"command": "extension.bannerCommentSetH2Font",
-				"title": "Banner comments: Set h2 font"
-			},
-			{
-				"command": "extension.bannerCommentSetH3Font",
-				"title": "Banner comments: Set h3 font"
-			}
-		],
-		"configuration": {
-			"type": "object",
-			"title": "Banner comments",
-			"properties": {
-				"banner-comments.h1": {
-					"type": "string",
-					"default": "Banner4",
-					"description": "Selected Header #1 font.",
-					"scope": "resource"
-				},
-				"banner-comments.h2": {
-					"type": "string",
-					"default": "Banner4",
-					"description": "Selected Header #2 font.",
-					"scope": "resource"
-				},
-				"banner-comments.h3": {
-					"type": "string",
-					"default": "Banner4",
-					"description": "Selected Header #3 font.",
-					"scope": "resource"
-				}
-			}
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"typescript": "^2.5.3",
-		"vscode": "^1.1.5",
-		"@types/node": "^7.0.43",
-		"@types/mocha": "^2.2.42"
-	},
-	"dependencies": {
-		"comment-json": "^1.1.3",
-		"figlet": "^1.2.0"
-	}
+    "name": "banner-comments",
+    "displayName": "Banner comments",
+    "description": "Converts selected lines into banner comments using figlet.",
+    "version": "0.2.1",
+    "publisher": "heyimfuzz",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/IMFUZZ/vscode_banner_comments.git"
+    },
+    "engines": {
+        "vscode": "^1.17.0"
+    },
+    "categories": [
+        "Formatters",
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.bannerCommentApplyH1",
+        "onCommand:extension.bannerCommentApplyH2",
+        "onCommand:extension.bannerCommentApplyH3",
+        "onCommand:extension.bannerCommentSetH1Font",
+        "onCommand:extension.bannerCommentSetH2Font",
+        "onCommand:extension.bannerCommentSetH3Font"
+    ],
+    "main": "./out/extension",
+    "icon": "images/banner-comment-icon.png",
+    "galleryBanner": {
+        "color": "#333333",
+        "theme": "dark"
+    },
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.bannerCommentApplyH1",
+                "title": "Banner comments: Apply h1 font"
+            },
+            {
+                "command": "extension.bannerCommentApplyH2",
+                "title": "Banner comments: Apply h2 font"
+            },
+            {
+                "command": "extension.bannerCommentApplyH3",
+                "title": "Banner comments: Apply h3 font"
+            },
+            {
+                "command": "extension.bannerCommentSetH1Font",
+                "title": "Banner comments: Set h1 font"
+            },
+            {
+                "command": "extension.bannerCommentSetH2Font",
+                "title": "Banner comments: Set h2 font"
+            },
+            {
+                "command": "extension.bannerCommentSetH3Font",
+                "title": "Banner comments: Set h3 font"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Banner comments",
+            "properties": {
+                "banner-comments.h1": {
+                    "type": "string",
+                    "default": "Banner4",
+                    "description": "Selected Header #1 font.",
+                    "scope": "resource"
+                },
+                "banner-comments.h2": {
+                    "type": "string",
+                    "default": "Banner4",
+                    "description": "Selected Header #2 font.",
+                    "scope": "resource"
+                },
+                "banner-comments.h3": {
+                    "type": "string",
+                    "default": "Banner4",
+                    "description": "Selected Header #3 font.",
+                    "scope": "resource"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.5.3",
+        "vscode": "^1.1.5",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "comment-json": "^1.1.3",
+        "figlet": "^1.2.0"
+    }
 }
