@@ -16,12 +16,12 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.bannerCommentApply",
-		"onCommand:extension.bannerCommentSetFont",
-		"onCommand:extension.bannerCommentPickFromFavorites",
-		"onCommand:extension.bannerCommentAddAFontToFavorites",
-		"onCommand:extension.bannerCommentAddCurrentFontToFavorites",
-		"onCommand:extension.bannerCommentRemoveFromFavorites"
+		"onCommand:extension.bannerCommentApplyH1",
+		"onCommand:extension.bannerCommentApplyH2",
+		"onCommand:extension.bannerCommentApplyH3",
+		"onCommand:extension.bannerCommentSetH1Font",
+		"onCommand:extension.bannerCommentSetH2Font",
+		"onCommand:extension.bannerCommentSetH3Font"
 	],
 	"main": "./out/extension",
 	"icon": "images/banner-comment-icon.png",
@@ -32,50 +32,50 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.bannerCommentApply",
-				"title": "Banner comments: Apply."
+				"command": "extension.bannerCommentApplyH1",
+				"title": "Banner comments: Apply h1 font"
 			},
 			{
-				"command": "extension.bannerCommentSetFont",
-				"title": "Banner comments: Select a font."
+				"command": "extension.bannerCommentApplyH2",
+				"title": "Banner comments: Apply h2 font"
 			},
 			{
-				"command": "extension.bannerCommentPickFromFavorites",
-				"title": "Banner comments: Select from favorites."
+				"command": "extension.bannerCommentApplyH3",
+				"title": "Banner comments: Apply h3 font"
 			},
 			{
-				"command": "extension.bannerCommentAddAFontToFavorites",
-				"title": "Banner comments: Add a font to favorites."
+				"command": "extension.bannerCommentSetH1Font",
+				"title": "Banner comments: Set h1 font"
 			},
 			{
-				"command": "extension.bannerCommentAddCurrentFontToFavorites",
-				"title": "Banner comments: Add current font to favorites."
+				"command": "extension.bannerCommentSetH2Font",
+				"title": "Banner comments: Set h2 font"
 			},
 			{
-				"command": "extension.bannerCommentRemoveFromFavorites",
-				"title": "Banner comments: Remove a font from favorites."
+				"command": "extension.bannerCommentSetH3Font",
+				"title": "Banner comments: Set h3 font"
 			}
 		],
 		"configuration": {
 			"type": "object",
 			"title": "Banner comments",
 			"properties": {
-				"banner-comments.font": {
+				"banner-comments.h1": {
 					"type": "string",
 					"default": "Banner4",
-					"description": "Default banner font to use.",
+					"description": "Selected Header #1 font.",
 					"scope": "resource"
 				},
-				"banner-comments.favorites": {
-					"type": "string[]",
-					"default": [],
-					"description": "List of favorites figlet fonts.",
+				"banner-comments.h2": {
+					"type": "string",
+					"default": "Banner4",
+					"description": "Selected Header #2 font.",
 					"scope": "resource"
 				},
-				"banner-comments.trimTrailingWhitespaces": {
-					"type": "boolean",
-					"default": true,
-					"description": "Automatically trims the trailing whitespaces of the generated banner.",
+				"banner-comments.h3": {
+					"type": "string",
+					"default": "Banner4",
+					"description": "Selected Header #3 font.",
 					"scope": "resource"
 				}
 			}
@@ -95,7 +95,6 @@
 		"@types/mocha": "^2.2.42"
 	},
 	"dependencies": {
-		"async": "^2.5.0",
 		"comment-json": "^1.1.3",
 		"figlet": "^1.2.0"
 	}
