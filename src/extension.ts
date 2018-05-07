@@ -58,7 +58,8 @@ function applyBannerComment( headerType ) {
 
 	const figletConfig:any = {
 		font: vscode.workspace.getConfiguration( "banner-comments" ).get( headerType ),
-		horizontalLayout: "default", verticalLayout: "default"
+		horizontalLayout: "default",
+		verticalLayout: "default"
 	};
 
 	editor.edit(
@@ -184,51 +185,65 @@ function getLanguageConfig( languageId:string ):any {
 ........................................................
 */
 
-/*
- * Replaces the provided selection with a figlet banner using the provided figlet config.
- * Formats the generated figlet banner using the provided commentTags.
-*/
-function replaceSelectionWithBanner( document, builder, selection, figletConfig, commentTags ) {
-	var bannerText:string = "";
-	let indentation:string = document.getText(
+function removeTrailingWhitespaces( lines ) {
+	return lines.map( _line => removeTrailingWhitespace( _line ) );
+}
+
+function removeTrailingWhitespace( line ) {
+	return line.replace( /\s+$/, '' );
+}
+
+function wrapLinesWithComments( lines, commentTags ) {
+	if ( commentTags.blockComment ) {
+		// Insert first tag in front
+		lines.unshift( commentTags.blockComment[0] );
+		// Insert second tag in back
+		lines.push( commentTags.blockComment[1] );
+		;
+	} else if ( commentTags.lineComment ) {
+		// Prefix each line with lineComment tag
+		lines.map( _line => commentTags.lineComment + _line );
+	}
+	return lines;
+}
+
+function applyIndentation( lines, indentation ) {
+	return lines.map(
+		( _line, index ) => ( index > 0 && _line.length > 0 ) ? indentation + _line : _line
+	);
+}
+
+function getSelectionIndentation( document, selection ) {
+	return document.getText(
 		new vscode.Range(
 			selection.start.translate( 0, -selection.start.character ),
 			selection.start
 		)
 	);
+}
+
+/*
+ * Replaces the provided selection with a figlet banner using the provided figlet config.
+ * Formats the generated figlet banner using the provided commentTags.
+*/
+function replaceSelectionWithBanner( document, builder, selection, figletConfig, commentTags ) {
+	let indentation:string = getSelectionIndentation( document, selection );
+	let lines:string[];
 	let selectionText:string = document.getText( selection );
+	// We don't process empty selection
+	if ( selectionText.length == 0 ) return;
 	try {
 		// Apply figlet on selection text.
-		bannerText = figlet.textSync( selectionText, figletConfig ) + "\n";
-		// Wrap in comment tags if any.
-		if ( commentTags && commentTags.blockComment ) {
-			bannerText = (
-				commentTags.blockComment[0] + "\n" +
-				(
-					bannerText.split( "\n" )
-						.map( _line => ( indentation + _line.replace(/\s+$/, '') ) )
-						.join( "\n" )
-				) +
-				commentTags.blockComment[1] + "\n"
-			);
-		} else if ( commentTags && commentTags.lineComment ) {
-			bannerText = bannerText.split( "\n" )
-				.map(
-					( _line, index ) => ( index > 0 ? indentation : "" ) + commentTags.lineComment + _line.replace( /\s+$/, '' )
-				)
-				.join( "\n" );
-		} else {
-			bannerText = bannerText.split( "\n" )
-				.map(
-					( _line, index ) => ( index > 0 ? indentation : "" ) + _line.replace( /\s+$/, '' )
-				)
-				.join( "\n" );
-		}
+		lines = figlet.textSync( selectionText, figletConfig ).split( "\n" );
+		// Format lines
+		lines = removeTrailingWhitespaces( lines );
+		if ( commentTags ) lines = wrapLinesWithComments( lines, commentTags );
+		lines = applyIndentation( lines, indentation );
 	} catch ( err ) {
 		vscode.window.showErrorMessage( err.message );
 		return;
 	}
-	builder.replace( selection, bannerText );
+	builder.replace( selection, lines.join( "\n" ) );
 }
 
 /*
