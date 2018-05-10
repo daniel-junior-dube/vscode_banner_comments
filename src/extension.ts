@@ -255,6 +255,12 @@ function addAFontToFavorites() {
 			if ( !_selectedPickerItem ) return;
 			let config:any = vscode.workspace.getConfiguration( "banner-comments" );
 			let favorites:string[] = config.favorites;
+			if ( favorites.includes( _selectedPickerItem.label ) ) {
+				vscode.window.showInformationMessage(
+					`Banner-comments: Font '${ _selectedPickerItem.label }' is already in favorites!`
+				);
+				return;
+			}
 			favorites.push( _selectedPickerItem.label );
 			config.update( "favorites", favorites, true );
 			console.log(
@@ -297,6 +303,12 @@ function removeFromFavorites() {
 				return console.error( err );
 			}
 			if ( !font ) return;
+			if ( !favorites.includes( font ) ) {
+				vscode.window.showErrorMessage(
+					`Banner-comments: Font '${ font }' isn't in the list of favorites!`
+				);
+				return;
+			}
 			favorites.splice( favorites.indexOf( font ), 1 );
 			config.update( "favorites", favorites, true );
 			console.log(
