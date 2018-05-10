@@ -19,9 +19,11 @@
         "onCommand:extension.bannerCommentApplyH1",
         "onCommand:extension.bannerCommentApplyH2",
         "onCommand:extension.bannerCommentApplyH3",
+        "onCommand:extension.bannerCommentApplyFavorite",
         "onCommand:extension.bannerCommentSetH1Font",
         "onCommand:extension.bannerCommentSetH2Font",
-        "onCommand:extension.bannerCommentSetH3Font"
+        "onCommand:extension.bannerCommentSetH3Font",
+        "onCommand:extension.bannerCommentAddToFavorite"
     ],
     "main": "./out/extension",
     "icon": "images/banner-comment-icon.png",
@@ -44,6 +46,10 @@
                 "title": "Banner comments: Apply h3 font"
             },
             {
+                "command": "extension.bannerCommentApplyFavorite",
+                "title": "Banner comments: Apply from favorites"
+            },
+            {
                 "command": "extension.bannerCommentSetH1Font",
                 "title": "Banner comments: Set h1 font"
             },
@@ -54,6 +60,10 @@
             {
                 "command": "extension.bannerCommentSetH3Font",
                 "title": "Banner comments: Set h3 font"
+            },
+            {
+                "command": "extension.bannerCommentAddToFavorite",
+                "title": "Banner comments: Add to favorites"
             }
         ],
         "configuration": {
@@ -76,6 +86,12 @@
                     "type": "string",
                     "default": "Banner4",
                     "description": "Selected Header #3 font.",
+                    "scope": "resource"
+                },
+                "banner-comments.favorites": {
+                    "type": "array",
+                    "default": [],
+                    "description": "List of favorited figlet fonts.",
                     "scope": "resource"
                 }
             }
