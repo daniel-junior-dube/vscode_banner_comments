@@ -4,6 +4,10 @@
     "description": "Converts selected lines into banner comments using figlet.",
     "version": "0.2.1",
     "publisher": "heyimfuzz",
+    "homepage": "https://github.com/IMFUZZ/vscode_banner_comments",
+    "bugs": {
+        "url": "https://github.com/IMFUZZ/vscode_banner_comments/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/IMFUZZ/vscode_banner_comments.git"
@@ -11,11 +15,22 @@
     "engines": {
         "vscode": "^1.17.0"
     },
+    "keywords": [
+        "figlet",
+        "comments",
+        "banners",
+        "headers",
+        "blocks",
+        "titles",
+        "minimap"
+    ],
     "categories": [
+        "Programming Languages",
         "Formatters",
         "Other"
     ],
     "activationEvents": [
+        "onCommand:extension.bannerCommentApply",
         "onCommand:extension.bannerCommentApplyH1",
         "onCommand:extension.bannerCommentApplyH2",
         "onCommand:extension.bannerCommentApplyH3",
@@ -23,7 +38,8 @@
         "onCommand:extension.bannerCommentSetH1Font",
         "onCommand:extension.bannerCommentSetH2Font",
         "onCommand:extension.bannerCommentSetH3Font",
-        "onCommand:extension.bannerCommentAddToFavorite"
+        "onCommand:extension.bannerCommentAddToFavorite",
+        "onCommand:extension.bannerCommentRemoveFromFavorite"
     ],
     "main": "./out/extension",
     "icon": "images/banner-comment-icon.png",
@@ -33,6 +49,10 @@
     },
     "contributes": {
         "commands": [
+            {
+                "command": "extension.bannerCommentApply",
+                "title": "Banner comments: Apply"
+            },
             {
                 "command": "extension.bannerCommentApplyH1",
                 "title": "Banner comments: Apply h1 font"
@@ -64,12 +84,42 @@
             {
                 "command": "extension.bannerCommentAddToFavorite",
                 "title": "Banner comments: Add to favorites"
+            },
+            {
+                "command": "extension.bannerCommentRemoveFromFavorite",
+                "title": "Banner comments: Remove from favorites"
             }
         ],
         "configuration": {
             "type": "object",
             "title": "Banner comments",
             "properties": {
+                "banner-comments.figlet.horizontalLayout": {
+                    "type": "string",
+                    "default": "default",
+                    "enum": [
+                        "default",
+                        "full",
+                        "fitted",
+                        "controlled smushing",
+                        "universal smushing"
+                    ],
+                    "description": "A string value that indicates the horizontal layout to use.",
+                    "scope": "resource"
+                },
+                "banner-comments.figlet.verticalLayout": {
+                    "type": "string",
+                    "default": "default",
+                    "enum": [
+                        "default",
+                        "full",
+                        "fitted",
+                        "controlled smushing",
+                        "universal smushing"
+                    ],
+                    "description": "A string value that indicates the horizontal layout to use.",
+                    "scope": "resource"
+                },
                 "banner-comments.h1": {
                     "type": "string",
                     "default": "Banner4",

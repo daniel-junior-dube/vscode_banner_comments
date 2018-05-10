@@ -15,6 +15,17 @@ import * as fs from "fs";
 import * as path from "path";
 import * as commentJson from "comment-json";
 import * as figlet from "figlet";
+import TextUtils from "./textUtils";
+
+/*
+..######...##........#######..########.....###....##........######.
+.##....##..##.......##.....##.##.....##...##.##...##.......##....##
+.##........##.......##.....##.##.....##..##...##..##.......##......
+.##...####.##.......##.....##.########..##.....##.##........######.
+.##....##..##.......##.....##.##.....##.#########.##.............##
+.##....##..##.......##.....##.##.....##.##.....##.##.......##....##
+..######...########..#######..########..##.....##.########..######.
+*/
 
 const HEADER_TYPE = { H1: "h1", H2: "h2", H3: "h3" };
 
@@ -29,14 +40,77 @@ const HEADER_TYPE = { H1: "h1", H2: "h2", H3: "h3" };
 */
 
 /*
-..####...#####...#####...##......##..##.
-.##..##..##..##..##..##..##.......####..
-.######..#####...#####...##........##...
-.##..##..##......##......##........##...
-.##..##..##......##......######....##...
-........................................
+..####...#####...#####...##......##..##..........######..#####....####...##...##.
+.##..##..##..##..##..##..##.......####...........##......##..##..##..##..###.###.
+.######..#####...#####...##........##............####....#####...##..##..##.#.##.
+.##..##..##......##......##........##............##......##..##..##..##..##...##.
+.##..##..##......##......######....##............##......##..##...####...##...##.
+.................................................................................
+.##......######...####...######.
+.##........##....##........##...
+.##........##.....####.....##...
+.##........##........##....##...
+.######..######...####.....##...
+................................
 */
 
+function applyFromList() {
+	const editor:vscode.TextEditor = vscode.window.activeTextEditor;
+
+	// An active editor session is required to apply banner comment.
+	if ( !editor ) {
+		return vscode.window.showErrorMessage(
+			"Banner-comments: No active editor (Open a file)."
+		);
+	}
+
+	let commentTags:any = getCommentTags( editor.document.languageId );
+	let availableFigletfonts:string[] = figlet.fontsSync();
+	let quickPickFigletFonts:vscode.QuickPickItem[] = availableFigletfonts.map(
+		( figletFontName:string ) => {
+			return {
+				label: figletFontName,
+				description: "Add the " + figletFontName + " font to favorites",
+			};
+		}
+	);
+
+	vscode.window.showQuickPick( quickPickFigletFonts ).then(
+		( _selectedPickerItem:vscode.QuickPickItem ) => {
+			if ( !_selectedPickerItem ) return;
+			const figletConfig:any = {
+				font: _selectedPickerItem.label,
+				horizontalLayout: "default",
+				verticalLayout: "default"
+			};
+
+			editor.edit(
+				( builder:vscode.TextEditorEdit ) => {
+					editor.selections.forEach(
+						_selection => replaceSelectionWithBanner(
+							editor.document, builder, _selection, figletConfig, commentTags
+						)
+					);
+				}
+			);
+		}
+	);
+}
+
+/*
+..####...#####...#####...##......##..##..........######..#####....####...##...##.
+.##..##..##..##..##..##..##.......####...........##......##..##..##..##..###.###.
+.######..#####...#####...##........##............####....#####...##..##..##.#.##.
+.##..##..##......##......##........##............##......##..##..##..##..##...##.
+.##..##..##......##......######....##............##......##..##...####...##...##.
+.................................................................................
+.##..##..######...####...#####...######..#####..
+.##..##..##......##..##..##..##..##......##..##.
+.######..####....######..##..##..####....#####..
+.##..##..##......##..##..##..##..##......##..##.
+.##..##..######..##..##..#####...######..##..##.
+................................................
+*/
 function applyFromHeader( headerType ) {
 	const editor:vscode.TextEditor = vscode.window.activeTextEditor;
 
@@ -45,16 +119,7 @@ function applyFromHeader( headerType ) {
 		return vscode.window.showErrorMessage( "Banner-comments: No active editor (Open a file)." );
 	}
 
-	let commentTags:any = null;
-	let langConfig:any = getLanguageConfig( editor.document.languageId );
-	if ( !langConfig ) {
-		console.warn(
-			"Banner-comments: No matching vscode language extension found. No comment tag will be applied."
-		);
-	} else {
-		commentTags = langConfig.comments;
-	}
-
+	let commentTags:any = getCommentTags( editor.document.languageId );
 	const figletConfig:any = {
 		font: vscode.workspace.getConfiguration( "banner-comments" ).get( headerType ),
 		horizontalLayout: "default",
@@ -72,6 +137,21 @@ function applyFromHeader( headerType ) {
 	);
 }
 
+/*
+..####...#####...#####...##......##..##..........######..#####....####...##...##.
+.##..##..##..##..##..##..##.......####...........##......##..##..##..##..###.###.
+.######..#####...#####...##........##............####....#####...##..##..##.#.##.
+.##..##..##......##......##........##............##......##..##..##..##..##...##.
+.##..##..##......##......######....##............##......##..##...####...##...##.
+.................................................................................
+.######...####...##..##...####...#####...######..######..######...####..
+.##......##..##..##..##..##..##..##..##....##......##....##......##.....
+.####....######..##..##..##..##..#####.....##......##....####.....####..
+.##......##..##...####...##..##..##..##....##......##....##..........##.
+.##......##..##....##.....####...##..##..######....##....######...####..
+........................................................................
+*/
+
 function applyFromFavorite() {
 	const editor:vscode.TextEditor = vscode.window.activeTextEditor;
 
@@ -80,16 +160,7 @@ function applyFromFavorite() {
 		return vscode.window.showErrorMessage( "Banner-comments: No active editor (Open a file)." );
 	}
 
-	let commentTags:any = null;
-	let langConfig:any = getLanguageConfig( editor.document.languageId );
-	if ( !langConfig ) {
-		console.warn(
-			"Banner-comments: No matching vscode language extension found. No comment tag will be applied."
-		);
-	} else {
-		commentTags = langConfig.comments;
-	}
-
+	let commentTags:any = getCommentTags( editor.document.languageId );
 	getFavoriteFontFromUser(
 		(err, font) => {
 			if ( err ) {
@@ -104,7 +175,7 @@ function applyFromFavorite() {
 				horizontalLayout: "default",
 				verticalLayout: "default"
 			};
-		
+
 			editor.edit(
 				( builder:vscode.TextEditorEdit ) => {
 					editor.selections.forEach(
@@ -114,31 +185,6 @@ function applyFromFavorite() {
 					);
 				}
 			);
-		}
-	);
-}
-
-function getFavoriteFontFromUser( callback ) {
-	let favorites:string[] = vscode.workspace.getConfiguration( "banner-comments" ).get( "favorites" );
-	if ( favorites.length == 0 ) {
-		callback(
-			new Error( "The list of favorite fonts is empty, please add some using the command 'Add favorite font'"),
-			null
-		);
-	}
-
-	var quickPickFavorites:vscode.QuickPickItem[] = favorites.map(
-		( favoriteFigletFontName:string ) => {
-			return {
-				label: favoriteFigletFontName,
-				description: "Use the " + favoriteFigletFontName + " font",
-			};
-		}
-	);
-
-	vscode.window.showQuickPick( quickPickFavorites ).then(
-		( _selectedPickerItem:vscode.QuickPickItem ) => {
-			callback( null, _selectedPickerItem.label );
 		}
 	);
 }
@@ -175,10 +221,24 @@ function setHeaderFont( headerType ) {
 	);
 }
 
-// ADD FAVORITE
+/*
+..####...#####...#####...........######...####..
+.##..##..##..##..##..##............##....##..##.
+.######..##..##..##..##............##....##..##.
+.##..##..##..##..##..##............##....##..##.
+.##..##..#####...#####.............##.....####..
+................................................
+.######...####...##..##...####...#####...######..######..######.
+.##......##..##..##..##..##..##..##..##....##......##....##.....
+.####....######..##..##..##..##..#####.....##......##....####...
+.##......##..##...####...##..##..##..##....##......##....##.....
+.##......##..##....##.....####...##..##..######....##....######.
+................................................................
+*/
+
 function addAFontToFavorites() {
-	var availableFigletfonts:string[] = figlet.fontsSync();
-	var quickPickFigletFonts:vscode.QuickPickItem[] = availableFigletfonts.map(
+	let availableFigletfonts:string[] = figlet.fontsSync();
+	let quickPickFigletFonts:vscode.QuickPickItem[] = availableFigletfonts.map(
 		( figletFontName:string ) => {
 			return {
 				label: figletFontName,
@@ -202,6 +262,48 @@ function addAFontToFavorites() {
 }
 
 /*
+.#####...######..##...##...####...##..##..######..........######..#####....####...##...##.
+.##..##..##......###.###..##..##..##..##..##..............##......##..##..##..##..###.###.
+.#####...####....##.#.##..##..##..##..##..####............####....#####...##..##..##.#.##.
+.##..##..##......##...##..##..##...####...##..............##......##..##..##..##..##...##.
+.##..##..######..##...##...####.....##....######..........##......##..##...####...##...##.
+..........................................................................................
+.######...####...##..##...####...#####...######..######..######...####..
+.##......##..##..##..##..##..##..##..##....##......##....##......##.....
+.####....######..##..##..##..##..#####.....##......##....####.....####..
+.##......##..##...####...##..##..##..##....##......##....##..........##.
+.##......##..##....##.....####...##..##..######....##....######...####..
+........................................................................
+*/
+
+function removeFromFavorites() {
+	let config:any = vscode.workspace.getConfiguration( "banner-comments" );
+	let favorites:string[] = config.favorites;
+	if ( favorites.length == 0 ) {
+		vscode.window.showErrorMessage(
+			"Banner-comments: The list of favorite fonts is empty, can't remove from empty list!"
+		);
+		return;
+	}
+	getFavoriteFontFromUser(
+		(err, font) => {
+			if ( err ) {
+				vscode.window.showErrorMessage(
+					"Banner-comments: An error occured while getting a favorite font from user! See the logs for more information."
+				);
+				return console.error( err );
+			}
+			if ( !font ) return;
+			favorites.splice( favorites.indexOf( font ), 1 );
+			config.update( "favorites", favorites, true );
+			console.log(
+				`Banner-comments: Added '${ font }' font to favorites`
+			);
+		}
+	);
+}
+
+/*
 .########..#######...#######..##........######.
 ....##....##.....##.##.....##.##.......##....##
 ....##....##.....##.##.....##.##.......##......
@@ -210,6 +312,58 @@ function addAFontToFavorites() {
 ....##....##.....##.##.....##.##.......##....##
 ....##.....#######...#######..########..######.
 */
+
+function getCommentTags( languageId:string ) {
+	let commentTags:any = null;
+	let langConfig:any = getLanguageConfig( languageId );
+	if ( !langConfig ) {
+		console.warn(
+			"Banner-comments: No matching vscode language extension found. No comment tag will be applied."
+		);
+	} else {
+		commentTags = langConfig.comments;
+	}
+	return commentTags;
+}
+
+/*
+..####...######..######..........######...####...##..##...####...#####...######..######..######.
+.##......##........##............##......##..##..##..##..##..##..##..##....##......##....##.....
+.##.###..####......##............####....######..##..##..##..##..#####.....##......##....####...
+.##..##..##........##............##......##..##...####...##..##..##..##....##......##....##.....
+..####...######....##............##......##..##....##.....####...##..##..######....##....######.
+................................................................................................
+.######..#####....####...##...##..........##..##...####...######..#####..
+.##......##..##..##..##..###.###..........##..##..##......##......##..##.
+.####....#####...##..##..##.#.##..........##..##...####...####....#####..
+.##......##..##..##..##..##...##..........##..##......##..##......##..##.
+.##......##..##...####...##...##...........####....####...######..##..##.
+.........................................................................
+*/
+function getFavoriteFontFromUser( callback ) {
+	let favorites:string[] = vscode.workspace.getConfiguration( "banner-comments" ).get( "favorites" );
+	if ( favorites.length == 0 ) {
+		callback(
+			new Error( "The list of favorite fonts is empty, please add some using the command 'Add favorite font'"),
+			null
+		);
+	}
+
+	var quickPickFavorites:vscode.QuickPickItem[] = favorites.map(
+		( favoriteFigletFontName:string ) => {
+			return {
+				label: favoriteFigletFontName,
+				description: "Use the " + favoriteFigletFontName + " font",
+			};
+		}
+	);
+
+	vscode.window.showQuickPick( quickPickFavorites ).then(
+		( _selectedPickerItem:vscode.QuickPickItem ) => {
+			callback( null, _selectedPickerItem.label );
+		}
+	);
+}
 
 /*
 ..####...######..######...........####....####...##..##..######..######...####..
@@ -278,51 +432,25 @@ function getLanguageConfig( languageId:string ):any {
 .##..##..##......##......##......##..##..##..##..##.....
 .##..##..######..##......######..##..##...####...######.
 ........................................................
+..####...######..##......######...####...######..######...####...##..##.
+.##......##......##......##......##..##....##......##....##..##..###.##.
+..####...####....##......####....##........##......##....##..##..##.###.
+.....##..##......##......##......##..##....##......##....##..##..##..##.
+..####...######..######..######...####.....##....######...####...##..##.
+........................................................................
 */
-
-function removeTrailingWhitespaces( lines ) {
-	return lines.map( _line => removeTrailingWhitespace( _line ) );
-}
-
-function removeTrailingWhitespace( line ) {
-	return line.replace( /\s+$/, '' );
-}
-
-function wrapLinesWithComments( lines, commentTags ) {
-	if ( commentTags.blockComment ) {
-		// Insert first tag in front
-		lines.unshift( commentTags.blockComment[0] );
-		// Insert second tag in back
-		lines.push( commentTags.blockComment[1] );
-		;
-	} else if ( commentTags.lineComment ) {
-		// Prefix each line with lineComment tag
-		lines.map( _line => commentTags.lineComment + _line );
-	}
-	return lines;
-}
-
-function applyIndentation( lines, indentation ) {
-	return lines.map(
-		( _line, index ) => ( index > 0 && _line.length > 0 ) ? indentation + _line : _line
-	);
-}
-
-function getSelectionIndentation( document, selection ) {
-	return document.getText(
-		new vscode.Range(
-			selection.start.translate( 0, -selection.start.character ),
-			selection.start
-		)
-	);
-}
-
 /*
  * Replaces the provided selection with a figlet banner using the provided figlet config.
  * Formats the generated figlet banner using the provided commentTags.
 */
-function replaceSelectionWithBanner( document, builder, selection, figletConfig, commentTags ) {
-	let indentation:string = getSelectionIndentation( document, selection );
+function replaceSelectionWithBanner(
+	document:vscode.TextDocument,
+	builder:vscode.TextEditorEdit,
+	selection:vscode.Selection,
+	figletConfig:any,
+	commentTags:any
+) {
+	let indentation:string = TextUtils.getSelectionIndentation( document, selection );
 	let lines:string[];
 	let selectionText:string = document.getText( selection );
 	// We don't process empty selection
@@ -331,9 +459,9 @@ function replaceSelectionWithBanner( document, builder, selection, figletConfig,
 		// Apply figlet on selection text.
 		lines = figlet.textSync( selectionText, figletConfig ).split( "\n" );
 		// Format lines
-		lines = removeTrailingWhitespaces( lines );
-		if ( commentTags ) lines = wrapLinesWithComments( lines, commentTags );
-		lines = applyIndentation( lines, indentation );
+		lines = TextUtils.removeTrailingWhitespaces( lines );
+		if ( commentTags ) lines = TextUtils.wrapLinesWithComments( lines, commentTags );
+		lines = TextUtils.applyIndentationToLines( lines, indentation );
 	} catch ( err ) {
 		vscode.window.showErrorMessage( "Banner-comments: " + err.message );
 		return;
@@ -351,7 +479,6 @@ function replaceSelectionWithBanner( document, builder, selection, figletConfig,
 .########.##.....##....##....########.##....##..######..####..#######..##....##
 */
 
-
 /*
 ..####....####...######..######..##..##...####...######..######.
 .##..##..##..##....##......##....##..##..##..##....##....##.....
@@ -363,44 +490,46 @@ function replaceSelectionWithBanner( document, builder, selection, figletConfig,
 
 export function activate( context: vscode.ExtensionContext ) {
 
-	/**
-	 * Banner-comment command to apply the font to selection.
-	 */
-	let applyH1:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentApplyH1", _ => applyFromHeader( "h1" )
-	);
-	let applyH2:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentApplyH2", _ => applyFromHeader( "h2" )
-	);
-	let applyH3:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentApplyH3", _ => applyFromHeader( "h3" )
-	);
-	let applyFavorite:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentApplyFavorite", _ => applyFromFavorite()
-	);
-
-	/**
-	 * Banner-comment command to set the font and save it to the workspace configuration.
-	 */
-	let setH1Font:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentSetH1Font", _ => setHeaderFont( "h1" )
-	);
-	let setH2Font:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentSetH2Font", _ => setHeaderFont( "h2" )
-	);
-	let setH3Font:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentSetH3Font", _ => setHeaderFont( "h3" )
-	);
-
-	/**
-	 * Banner-comment command to add a font to the list of favorites which saves into workspace configuration.
-	 */
-	let addToFavorite:vscode.Disposable = vscode.commands.registerCommand(
-		"extension.bannerCommentAddToFavorite", _ => addAFontToFavorites()
-	);
-
 	context.subscriptions.push(
-		applyH1, applyH2, applyH3, applyFavorite, setH1Font, setH2Font, setH3Font, addToFavorite
+		/**
+		 * Banner-comment command to apply the font to selection.
+		 */
+		vscode.commands.registerCommand(
+			"extension.bannerCommentApply", _ => applyFromList()
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentApplyH1", _ => applyFromHeader( "h1" )
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentApplyH2", _ => applyFromHeader( "h2" )
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentApplyH3", _ => applyFromHeader( "h3" )
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentApplyFavorite", _ => applyFromFavorite()
+		),
+		/**
+		 * Banner-comment command to set the font and save it to the workspace configuration.
+		 */
+		vscode.commands.registerCommand(
+			"extension.bannerCommentSetH1Font", _ => setHeaderFont( "h1" )
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentSetH2Font", _ => setHeaderFont( "h2" )
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentSetH3Font", _ => setHeaderFont( "h3" )
+		),
+		/**
+		 * Banner-comment command to add a font to the list of favorites which saves into workspace configuration.
+		 */
+		vscode.commands.registerCommand(
+			"extension.bannerCommentAddToFavorite", _ => addAFontToFavorites()
+		),
+		vscode.commands.registerCommand(
+			"extension.bannerCommentRemoveFromFavorite", _ => removeFromFavorites()
+		)
 	);
 }
 
