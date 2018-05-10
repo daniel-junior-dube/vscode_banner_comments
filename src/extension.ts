@@ -78,10 +78,11 @@ function applyFromList() {
 	vscode.window.showQuickPick( quickPickFigletFonts ).then(
 		( _selectedPickerItem:vscode.QuickPickItem ) => {
 			if ( !_selectedPickerItem ) return;
+			let config:any = vscode.workspace.getConfiguration( "banner-comments" );
 			const figletConfig:any = {
 				font: _selectedPickerItem.label,
-				horizontalLayout: "default",
-				verticalLayout: "default"
+				horizontalLayout: config.get( "figlet.horizontalLayout" ),
+				verticalLayout: config.get( "figlet.verticalLayout" )
 			};
 
 			editor.edit(
@@ -119,11 +120,12 @@ function applyFromHeader( headerType ) {
 		return vscode.window.showErrorMessage( "Banner-comments: No active editor (Open a file)." );
 	}
 
+	let config:any = vscode.workspace.getConfiguration( "banner-comments" );
 	let commentTags:any = getCommentTags( editor.document.languageId );
 	const figletConfig:any = {
 		font: vscode.workspace.getConfiguration( "banner-comments" ).get( headerType ),
-		horizontalLayout: "default",
-		verticalLayout: "default"
+		horizontalLayout: config.get( "figlet.horizontalLayout" ),
+		verticalLayout: config.get( "figlet.verticalLayout" )
 	};
 
 	editor.edit(
@@ -170,10 +172,11 @@ function applyFromFavorite() {
 				return console.error( err );
 			}
 			if ( !font ) return;
+			let config:any = vscode.workspace.getConfiguration( "banner-comments" );
 			const figletConfig:any = {
 				font: font,
-				horizontalLayout: "default",
-				verticalLayout: "default"
+				horizontalLayout: config.get( "figlet.horizontalLayout" ),
+				verticalLayout: config.get( "figlet.verticalLayout" )
 			};
 
 			editor.edit(
@@ -495,7 +498,7 @@ export function activate( context: vscode.ExtensionContext ) {
 		 * Banner-comment command to apply the font to selection.
 		 */
 		vscode.commands.registerCommand(
-			"extension.bannerCommentApply", _ => applyFromList()
+			"extension.bannerCommentApplyFromList", _ => applyFromList()
 		),
 		vscode.commands.registerCommand(
 			"extension.bannerCommentApplyH1", _ => applyFromHeader( "h1" )

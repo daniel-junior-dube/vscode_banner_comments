@@ -1,8 +1,8 @@
 {
     "name": "banner-comments",
     "displayName": "Banner comments",
-    "description": "Converts selected lines into banner comments using figlet.",
-    "version": "0.2.4",
+    "description": "Converts selected lines into banner comments using figlet fonts.",
+    "version": "0.3.0",
     "publisher": "heyimfuzz",
     "homepage": "https://github.com/IMFUZZ/vscode_banner_comments",
     "bugs": {
@@ -30,7 +30,7 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.bannerCommentApply",
+        "onCommand:extension.bannerCommentApplyFromList",
         "onCommand:extension.bannerCommentApplyH1",
         "onCommand:extension.bannerCommentApplyH2",
         "onCommand:extension.bannerCommentApplyH3",
@@ -50,8 +50,8 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.bannerCommentApply",
-                "title": "Banner comments: Apply"
+                "command": "extension.bannerCommentApplyFromList",
+                "title": "Banner comments: Apply from list"
             },
             {
                 "command": "extension.bannerCommentApplyH1",
