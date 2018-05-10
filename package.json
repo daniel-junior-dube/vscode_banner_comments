@@ -2,7 +2,7 @@
     "name": "banner-comments",
     "displayName": "Banner comments",
     "description": "Converts selected lines into banner comments using figlet.",
-    "version": "0.2.1",
+    "version": "0.2.4",
     "publisher": "heyimfuzz",
     "homepage": "https://github.com/IMFUZZ/vscode_banner_comments",
     "bugs": {
@@ -13,7 +13,7 @@
         "url": "https://github.com/IMFUZZ/vscode_banner_comments.git"
     },
     "engines": {
-        "vscode": "^1.17.0"
+        "vscode": "^1.1.0"
     },
     "keywords": [
         "figlet",
