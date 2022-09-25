@@ -2,7 +2,6 @@
 out
 node_modules/
 
-package-lock.json
 .vscode-test/
 .vscode
 .vscodeignore

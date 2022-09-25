@@ -1,167 +1,168 @@
 {
-    "name": "banner-comments",
-    "displayName": "Banner comments",
-    "description": "Converts selected lines into banner comments using figlet fonts.",
-    "version": "0.3.0",
-    "publisher": "heyimfuzz",
-    "homepage": "https://github.com/IMFUZZ/vscode_banner_comments",
-    "bugs": {
-        "url": "https://github.com/IMFUZZ/vscode_banner_comments/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/IMFUZZ/vscode_banner_comments.git"
-    },
-    "engines": {
-        "vscode": "^1.1.0"
-    },
-    "keywords": [
-        "figlet",
-        "comments",
-        "banners",
-        "headers",
-        "blocks",
-        "titles",
-        "minimap"
-    ],
-    "categories": [
-        "Programming Languages",
-        "Formatters",
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:extension.bannerCommentApplyFromList",
-        "onCommand:extension.bannerCommentApplyH1",
-        "onCommand:extension.bannerCommentApplyH2",
-        "onCommand:extension.bannerCommentApplyH3",
-        "onCommand:extension.bannerCommentApplyFavorite",
-        "onCommand:extension.bannerCommentSetH1Font",
-        "onCommand:extension.bannerCommentSetH2Font",
-        "onCommand:extension.bannerCommentSetH3Font",
-        "onCommand:extension.bannerCommentAddToFavorite",
-        "onCommand:extension.bannerCommentRemoveFromFavorite"
-    ],
-    "main": "./out/extension",
-    "icon": "images/banner-comment-icon.png",
-    "galleryBanner": {
-        "color": "#333333",
-        "theme": "dark"
-    },
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.bannerCommentApplyFromList",
-                "title": "Banner comments: Apply from list"
-            },
-            {
-                "command": "extension.bannerCommentApplyH1",
-                "title": "Banner comments: Apply h1 font"
-            },
-            {
-                "command": "extension.bannerCommentApplyH2",
-                "title": "Banner comments: Apply h2 font"
-            },
-            {
-                "command": "extension.bannerCommentApplyH3",
-                "title": "Banner comments: Apply h3 font"
-            },
-            {
-                "command": "extension.bannerCommentApplyFavorite",
-                "title": "Banner comments: Apply from favorites"
-            },
-            {
-                "command": "extension.bannerCommentSetH1Font",
-                "title": "Banner comments: Set h1 font"
-            },
-            {
-                "command": "extension.bannerCommentSetH2Font",
-                "title": "Banner comments: Set h2 font"
-            },
-            {
-                "command": "extension.bannerCommentSetH3Font",
-                "title": "Banner comments: Set h3 font"
-            },
-            {
-                "command": "extension.bannerCommentAddToFavorite",
-                "title": "Banner comments: Add to favorites"
-            },
-            {
-                "command": "extension.bannerCommentRemoveFromFavorite",
-                "title": "Banner comments: Remove from favorites"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "Banner comments",
-            "properties": {
-                "banner-comments.figlet.horizontalLayout": {
-                    "type": "string",
-                    "default": "default",
-                    "enum": [
-                        "default",
-                        "full",
-                        "fitted",
-                        "controlled smushing",
-                        "universal smushing"
-                    ],
-                    "description": "A string value that indicates the horizontal layout to use.",
-                    "scope": "resource"
-                },
-                "banner-comments.figlet.verticalLayout": {
-                    "type": "string",
-                    "default": "default",
-                    "enum": [
-                        "default",
-                        "full",
-                        "fitted",
-                        "controlled smushing",
-                        "universal smushing"
-                    ],
-                    "description": "A string value that indicates the horizontal layout to use.",
-                    "scope": "resource"
-                },
-                "banner-comments.h1": {
-                    "type": "string",
-                    "default": "Banner4",
-                    "description": "Selected Header #1 font.",
-                    "scope": "resource"
-                },
-                "banner-comments.h2": {
-                    "type": "string",
-                    "default": "Banner4",
-                    "description": "Selected Header #2 font.",
-                    "scope": "resource"
-                },
-                "banner-comments.h3": {
-                    "type": "string",
-                    "default": "Banner4",
-                    "description": "Selected Header #3 font.",
-                    "scope": "resource"
-                },
-                "banner-comments.favorites": {
-                    "type": "array",
-                    "default": [],
-                    "description": "List of favorited figlet fonts.",
-                    "scope": "resource"
-                }
-            }
-        }
-    },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.5.3",
-        "vscode": "^1.1.5",
-        "@types/node": "^7.0.43",
-        "@types/mocha": "^2.2.42"
-    },
-    "dependencies": {
-        "comment-json": "^1.1.3",
-        "figlet": "^1.2.0"
-    }
+	"name": "banner-comments",
+	"displayName": "Banner comments",
+	"description": "Converts selected lines into banner comments using figlet fonts.",
+	"version": "0.4.0",
+	"publisher": "daniel-junior-dube",
+	"homepage": "https://github.com/daniel-junior-dube/vscode_banner_comments",
+	"bugs": {
+		"url": "https://github.com/daniel-junior-dube/vscode_banner_comments/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/daniel-junior-dube/vscode_banner_comments.git"
+	},
+	"engines": {
+		"vscode": "^1.34.0"
+	},
+	"keywords": [
+		"figlet",
+		"comments",
+		"banners",
+		"headers",
+		"blocks",
+		"titles",
+		"minimap"
+	],
+	"categories": [
+		"Programming Languages",
+		"Formatters",
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.bannerCommentApplyFromList",
+		"onCommand:extension.bannerCommentApplyH1",
+		"onCommand:extension.bannerCommentApplyH2",
+		"onCommand:extension.bannerCommentApplyH3",
+		"onCommand:extension.bannerCommentApplyFavorite",
+		"onCommand:extension.bannerCommentSetH1Font",
+		"onCommand:extension.bannerCommentSetH2Font",
+		"onCommand:extension.bannerCommentSetH3Font",
+		"onCommand:extension.bannerCommentAddToFavorite",
+		"onCommand:extension.bannerCommentRemoveFromFavorite"
+	],
+	"main": "./out/extension",
+	"icon": "images/banner-comment-icon.png",
+	"galleryBanner": {
+		"color": "#333333",
+		"theme": "dark"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.bannerCommentApplyFromList",
+				"title": "Banner comments: Apply from list"
+			},
+			{
+				"command": "extension.bannerCommentApplyH1",
+				"title": "Banner comments: Apply h1 font"
+			},
+			{
+				"command": "extension.bannerCommentApplyH2",
+				"title": "Banner comments: Apply h2 font"
+			},
+			{
+				"command": "extension.bannerCommentApplyH3",
+				"title": "Banner comments: Apply h3 font"
+			},
+			{
+				"command": "extension.bannerCommentApplyFavorite",
+				"title": "Banner comments: Apply from favorites"
+			},
+			{
+				"command": "extension.bannerCommentSetH1Font",
+				"title": "Banner comments: Set h1 font"
+			},
+			{
+				"command": "extension.bannerCommentSetH2Font",
+				"title": "Banner comments: Set h2 font"
+			},
+			{
+				"command": "extension.bannerCommentSetH3Font",
+				"title": "Banner comments: Set h3 font"
+			},
+			{
+				"command": "extension.bannerCommentAddToFavorite",
+				"title": "Banner comments: Add to favorites"
+			},
+			{
+				"command": "extension.bannerCommentRemoveFromFavorite",
+				"title": "Banner comments: Remove from favorites"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Banner comments",
+			"properties": {
+				"banner-comments.figlet.horizontalLayout": {
+					"type": "string",
+					"default": "default",
+					"enum": [
+						"default",
+						"full",
+						"fitted",
+						"controlled smushing",
+						"universal smushing"
+					],
+					"description": "A string value that indicates the horizontal layout to use.",
+					"scope": "resource"
+				},
+				"banner-comments.figlet.verticalLayout": {
+					"type": "string",
+					"default": "default",
+					"enum": [
+						"default",
+						"full",
+						"fitted",
+						"controlled smushing",
+						"universal smushing"
+					],
+					"description": "A string value that indicates the horizontal layout to use.",
+					"scope": "resource"
+				},
+				"banner-comments.h1": {
+					"type": "string",
+					"default": "Banner4",
+					"description": "Selected Header #1 font.",
+					"scope": "resource"
+				},
+				"banner-comments.h2": {
+					"type": "string",
+					"default": "Banner4",
+					"description": "Selected Header #2 font.",
+					"scope": "resource"
+				},
+				"banner-comments.h3": {
+					"type": "string",
+					"default": "Banner4",
+					"description": "Selected Header #3 font.",
+					"scope": "resource"
+				},
+				"banner-comments.favorites": {
+					"type": "array",
+					"default": [],
+					"description": "List of favorited figlet fonts.",
+					"scope": "resource"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/comment-json": "^1.1.1",
+		"@types/figlet": "^1.2.0",
+		"@types/node": "^14.10.0",
+		"@types/vscode": "^1.34.0",
+		"typescript": "^4.0.2"
+	},
+	"dependencies": {
+		"comment-json": "^1.1.3",
+		"figlet": "^1.5.0"
+	}
 }

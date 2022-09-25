@@ -56,7 +56,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-- Only the languages provided by vscode are supported to wrap the banner with comments.
+- Only the languages provided by vscode are supported to wrap the banner with comments. Converting to figlet font should still work
 
 ## Release Notes
 
