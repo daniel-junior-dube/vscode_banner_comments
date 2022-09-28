@@ -3,7 +3,6 @@
 import * as vscode from 'vscode';
 import * as fs from "fs";
 import * as path from "path";
-import * as commentJson from "comment-json";
 import * as JSON5 from "json5";
 import { EXT_CONFIG_SECTION_NAME, EXCLUDED_LANGUAGE_IDS } from "./constants";
 
