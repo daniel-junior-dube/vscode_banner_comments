@@ -72,9 +72,16 @@ __Features__:
 - __Apply from favorites__: Opens the list of favorite fonts and applies the selected one.
 
 __Settings__:
-- __banner-comments.figlet.horizontalLayout__: Figlet configuration providing 5 differents layout affecting the width of the font. See more details here: https://www.npmjs.com/package/figlet#user-content-horizontallayout
-- __banner-comments.figlet.verticalLayout__: Figlet configuration providing 5 differents layout affecting the height of the font. See more details here: https://www.npmjs.com/package/figlet#verticallayout
-- __banner-comments.favorites__: List of favorited fonts.
+- __banner-comments.figlet.horizontalLayout__: Figlet configuration providing 5 differents layout affecting the width of the font. https://www.npmjs.com/package/figlet#user-content-horizontallayout
+- __banner-comments.figlet.verticalLayout__: Figlet configuration providing 5 differents layout affecting the height of the font. https://www.npmjs.com/package/figlet#verticallayout
+- __banner-comments.figlet.whitespaceBreak__: Figlet configuration that, if set to true, will attempt to break up the text on whitespace when limiting the width. https://www.npmjs.com/package/figlet#whitespaceBreak
+- __banner-comments.figlet.width__: Figlet configuration that limits the width of the output. Requires `banner-comments.figlet.whitespaceBreak` to be true. https://www.npmjs.com/package/figlet#width
+
+### 0.4.1
+
+- Using JSON5 instead of commentJson
+- Update dependencies
+- Added `figlet.whitespaceBreak` and `figlet.width` configuration, allowing to wrap banner comments automatically based on resulting width.
 
 ### 0.2.0
 

@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import * as fs from "fs";
 import * as path from "path";
 import * as commentJson from "comment-json";
+import * as JSON5 from "json5";
 import { EXT_CONFIG_SECTION_NAME, EXCLUDED_LANGUAGE_IDS } from "./constants";
 
 /*
@@ -125,7 +126,14 @@ function getLanguageConfig(languageId: string): any {
 	 * comments in the json file, which breaks the default node parser ("xml" and "xsl" for example).
 	 * To resolve this problem, I had to use the `commentJson` library.
 	 */
-	return commentJson.parse(fs.readFileSync(configFilepath, "utf8"));
+	return JSON5.parse(fs.readFileSync(configFilepath, "utf8"));
+	// return commentJson.parse(fs.readFileSync(configFilepath, "utf8"), null, true);
+	// let raw_config_content = fs.readFileSync(configFilepath, "utf8");
+	// return JSON.parse(
+	// 	raw_config_content
+	// 		.replace(/\s\/\/[^\n\r]*(?:[\n\r]+|$)/g, "")
+	// 		.replace(/, \n\s*}/g, "}")
+	// );
 }
 
 export default {

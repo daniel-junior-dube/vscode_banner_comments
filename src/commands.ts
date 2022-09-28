@@ -7,8 +7,28 @@ import VSCodeUtils from "./vscodeUtils";
 import {
 	EXT_CONFIG_SECTION_NAME,
 	FIGLET_H_LAYOUT_CONFIG_KEY,
-	FIGLET_V_LAYOUT_CONFIG_KEY
+	FIGLET_V_LAYOUT_CONFIG_KEY,
+	WIDTH_CONFIG_KEY,
+	WHITESPACEBREAK_CONFIG_KEY,
+	FIGLET_MIN_WIDTH
 } from "./constants";
+
+function get_figlet_configuration(font_name: string) {
+	let config: any = vscode.workspace.getConfiguration(EXT_CONFIG_SECTION_NAME);
+	let figletConfig: any = {
+		font: font_name,
+		horizontalLayout: config.get(FIGLET_H_LAYOUT_CONFIG_KEY),
+		verticalLayout: config.get(FIGLET_V_LAYOUT_CONFIG_KEY)
+	};
+
+	// INFO: When `whitespaceBreak` on figletConfig, it seems to ignore the value of `whitespaceBreak` and is enabled
+	// by default.
+	if (config.get(WHITESPACEBREAK_CONFIG_KEY)) {
+		figletConfig.whitespaceBreak = true;
+		figletConfig.width = Math.max(config.get(WIDTH_CONFIG_KEY), FIGLET_MIN_WIDTH);
+	}
+	return figletConfig;
+}
 
 /*
 .#####...######..#####...##.......####....####...######.
@@ -98,12 +118,7 @@ export default {
 		vscode.window.showQuickPick(quickPickFigletFonts).then(
 			(selectedPickerItem: vscode.QuickPickItem) => {
 				if (!selectedPickerItem) return;
-				let config: any = vscode.workspace.getConfiguration(EXT_CONFIG_SECTION_NAME);
-				const figletConfig: any = {
-					font: selectedPickerItem.label,
-					horizontalLayout: config.get(FIGLET_H_LAYOUT_CONFIG_KEY),
-					verticalLayout: config.get(FIGLET_V_LAYOUT_CONFIG_KEY)
-				};
+				const figletConfig = get_figlet_configuration(selectedPickerItem.label);
 				editor.edit((builder: vscode.TextEditorEdit) =>
 					editor.selections.forEach((selection: vscode.Selection) =>
 						replaceSelectionWithBanner(editor.document, builder, selection, figletConfig, commentTags)
@@ -134,15 +149,8 @@ export default {
 		if (!editor) {
 			return vscode.window.showErrorMessage("Banner-comments: No active editor (Open a file).");
 		}
-
-		let config: any = vscode.workspace.getConfiguration(EXT_CONFIG_SECTION_NAME);
-		let commentTags: any = VSCodeUtils.getCommentTags(editor.document.languageId);
-		const figletConfig: any = {
-			font: vscode.workspace.getConfiguration(EXT_CONFIG_SECTION_NAME).get(headerType),
-			horizontalLayout: config.get(FIGLET_H_LAYOUT_CONFIG_KEY),
-			verticalLayout: config.get(FIGLET_V_LAYOUT_CONFIG_KEY)
-		};
-
+		const figletConfig = get_figlet_configuration(vscode.workspace.getConfiguration(EXT_CONFIG_SECTION_NAME).get(headerType));
+		const commentTags: any = VSCodeUtils.getCommentTags(editor.document.languageId);
 		editor.edit((builder: vscode.TextEditorEdit) =>
 			editor.selections.forEach((selection: vscode.Selection) =>
 				replaceSelectionWithBanner(editor.document, builder, selection, figletConfig, commentTags)
@@ -187,13 +195,8 @@ export default {
 					return console.error(err);
 				}
 				if (!font) return;
-				let config: any = vscode.workspace.getConfiguration(EXT_CONFIG_SECTION_NAME);
-				const figletConfig: any = {
-					font: font,
-					horizontalLayout: config.get(FIGLET_H_LAYOUT_CONFIG_KEY),
-					verticalLayout: config.get(FIGLET_V_LAYOUT_CONFIG_KEY)
-				};
 
+				const figletConfig = get_figlet_configuration(font);
 				editor.edit((builder: vscode.TextEditorEdit) =>
 					editor.selections.forEach((selection: vscode.Selection) =>
 						replaceSelectionWithBanner(editor.document, builder, selection, figletConfig, commentTags)
