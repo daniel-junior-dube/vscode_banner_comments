@@ -1,6 +1,6 @@
 ![header](images/header.png)
 
-Converts the selected text into banners-comments "headers" using figlet ( automatically wrapped with comment tag! ).
+Converts the selected text into banners-comments "headers" using figlet.
 
 **Table of Contents**
 
@@ -12,6 +12,7 @@ Converts the selected text into banners-comments "headers" using figlet ( automa
 - [Known Issues](#known-issues)
 
 ## Features
+-----------------------------------------------------------------------------------------------------------
 
 ### Apply
 
@@ -39,6 +40,7 @@ Assign a font for the specified header type (h1, h2 and h3).
 Add a font to the list of favorites so it's easily accessible later.
 
 ## Settings
+-----------------------------------------------------------------------------------------------------------
 
 This extension contributes the following settings:
 
@@ -49,7 +51,7 @@ This extension contributes the following settings:
 * `banner-comments.figlet.horizontalLayout`: "\<default | full | fitted | controlled smushing | universal smushing\>"
 * `banner-comments.figlet.verticalLayout`: "\<default | full | fitted | controlled smushing | universal smushing\>"
 * `banner-comments.figlet.whitespaceBreak`: "\<true|false\>"
-* `banner-comments.figlet.width`: "\<integer value\ (default 80)>"
+* `banner-comments.figlet.width`: "\<integer value (default 80)\>"
 
 ## Known Issues
 
