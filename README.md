@@ -5,6 +5,9 @@ Converts the selected text into banners-comments "headers" using figlet ( automa
 **Table of Contents**
 
 - [Features](#features)
+  - [Apply](#apply)
+  - [Set font](#set-font)
+  - [Add to / remove from favorites](#add-to--remove-from-favorites)
 - [Settings](#settings)
 - [Known Issues](#known-issues)
 
