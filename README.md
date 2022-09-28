@@ -12,7 +12,6 @@ Converts the selected text into banners-comments "headers" using figlet.
 - [Known Issues](#known-issues)
 
 ## Features
------------------------------------------------------------------------------------------------------------
 
 ### Apply
 
@@ -40,7 +39,6 @@ Assign a font for the specified header type (h1, h2 and h3).
 Add a font to the list of favorites so it's easily accessible later.
 
 ## Settings
------------------------------------------------------------------------------------------------------------
 
 This extension contributes the following settings:
 
@@ -56,5 +54,3 @@ This extension contributes the following settings:
 ## Known Issues
 
 - Only the languages provided by vscode are supported to wrap the banner with comments. Converting to figlet font should still work
-
------------------------------------------------------------------------------------------------------------
