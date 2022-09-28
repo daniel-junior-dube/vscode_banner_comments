@@ -2,7 +2,7 @@
 	"name": "banner-comments",
 	"displayName": "Banner comments",
 	"description": "Converts selected lines into banner comments using figlet fonts.",
-	"version": "0.4.1",
+	"version": "0.4.3",
 	"publisher": "heyimfuzz",
 	"homepage": "https://github.com/daniel-junior-dube/vscode_banner_comments",
 	"bugs": {
