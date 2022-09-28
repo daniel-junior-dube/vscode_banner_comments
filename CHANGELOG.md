@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to the "banner-comments" extension will be documented in this file.
 
-## 0.4.1
+## 0.4.3
 
 - Updated the README page
 
