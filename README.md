@@ -24,7 +24,7 @@ You can also enable `whitespaceBreak` and defined a desired `width` so the resul
 
 ![feature 'Apply'](images/banner-comments-apply.gif)
 
-**NOTE**: Also supports multi-line selections:
+Also supports multi-line selections:
 
 ![feature 'Multi-cursor'](images/banner-comments-multi-line.gif)
 
